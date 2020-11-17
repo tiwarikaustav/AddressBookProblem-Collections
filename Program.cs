@@ -45,7 +45,8 @@ namespace AddressBookProblem_Collections
                 Console.WriteLine("\nEnter 1 to add New Address Book \nEnter 2 to Add Contacts \nEnter 3 to Edit Contacts " +
                     "\nEnter 4 to Delete Contacts\nEnter 5 to search contact using city name" +
                     "\nEnter 6 to search contact using state name\nEnter 7 to view contact details by city name" +
-                    "\nEnter 8 to view contact details by state name\nEnter any other key to exit");
+                    "\nEnter 8 to view contact details by state name\nEnter 9 to get number of contacts by city" +
+                    "\nEnter 10 to get number of contacts by state\nEnter any other key to exit");
                 string options = Console.ReadLine();
                 switch (options)
                 {
@@ -72,6 +73,12 @@ namespace AddressBookProblem_Collections
                         break;
                     case "8":
                         ViewContactByStateName();
+                        break;
+                    case "9":
+                        NumberOfContactsByCityName();
+                        break;
+                    case "10":
+                        NumberOfContactsByStateName();
                         break;
                     default:
                         flag = false;
@@ -255,6 +262,29 @@ namespace AddressBookProblem_Collections
                 Console.WriteLine("Phone Number: " + contact.phoneNumber + "\nEmail: " + contact.email);
                 Console.WriteLine("\n");
             }
+        }
+        public static void NumberOfContactsByCityName()
+        {
+            Console.WriteLine("\nEnter name of the city!");
+            string cityName = Console.ReadLine();
+            if (!cityToContactMapperGlobal.ContainsKey(cityName))
+            {
+                Console.WriteLine("No of Contacts: 0");
+                return;
+            }
+            Console.WriteLine("No of Contacts: " + cityToContactMapperGlobal[cityName].Count);
+        }
+
+        public static void NumberOfContactsByStateName()
+        {
+            Console.WriteLine("\nEnter name of the state!");
+            string stateName = Console.ReadLine();
+            if (!stateToContactMapperGlobal.ContainsKey(stateName))
+            {
+                Console.WriteLine("No of Contacts: 0");
+                return;
+            }
+            Console.WriteLine("No of Contacts: " + stateToContactMapperGlobal[stateName].Count);
         }
     }
 }
