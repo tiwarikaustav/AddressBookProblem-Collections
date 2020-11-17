@@ -12,13 +12,24 @@ namespace AddressBookProblem_Collections
     class Program
     {
         /// <summary>
-        /// addressBookMapper is a dictionary used to store All AddressBooks created in the project
+        /// addressBookMapper is a data structure used to store All AddressBooks created in the project
         /// which can be accessed with the help of their name
         /// </summary>
         private static readonly Dictionary<string, AddressBook> addressBookMapper = new Dictionary<string, AddressBook>();
 
         /// <summary>
-        /// Entry point of program
+        /// cityToContactMapperGlobal is a variable which store all contacts with their city names
+        /// </summary>
+        public static readonly Dictionary<string, List<Contact>> cityToContactMapperGlobal = new Dictionary<string, List<Contact>>();
+
+        /// <summary>
+        /// stateToContactMapperGlobal is a variable which store all contacts with their state names
+        /// </summary>
+        public static readonly Dictionary<string, List<Contact>> stateToContactMapperGlobal = new Dictionary<string, List<Contact>>();
+
+        /// <summary>
+        /// Defines the entry point of the application.
+        /// Calls StartProgram function
         /// </summary>
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
@@ -28,7 +39,7 @@ namespace AddressBookProblem_Collections
         }
 
         /// <summary>
-        /// StartProgram function takes user requirement 
+        /// StartProgram function asks user about which activity to be done
         /// </summary>
         private static void StartProgram()
         {
@@ -36,7 +47,8 @@ namespace AddressBookProblem_Collections
             while (flag)
             {
                 Console.WriteLine("\nEnter 1 to add New Address Book \nEnter 2 to Add Contacts \nEnter 3 to Edit Contacts " +
-                    "\nEnter 4 to Delete Contacts\nEnter any other key to exit");
+                    "\nEnter 4 to Delete Contacts\nEnter 5 to search contact using city name" +
+                    "\nEnter 6 to search contact using state name\nEnter any other key to exit");
                 string options = Console.ReadLine();
                 switch (options)
                 {
@@ -51,6 +63,12 @@ namespace AddressBookProblem_Collections
                         break;
                     case "4":
                         DeleteContactsOfAddressBook();
+                        break;
+                    case "5":
+                        SearchContactWithCityName();
+                        break;
+                    case "6":
+                        SearchContactWithStateName();
                         break;
                     default:
                         flag = false;
@@ -87,7 +105,7 @@ namespace AddressBookProblem_Collections
             if (!addressBookMapper.ContainsKey(name))
             {
                 Console.WriteLine("No address book found with this name");
-                Console.WriteLine("These names already exist:");
+                Console.WriteLine("Please Enter Valid Name from following names:");
                 foreach (KeyValuePair<string, AddressBook> tempPair in addressBookMapper)
                 {
                     Console.WriteLine(tempPair.Key);
@@ -144,6 +162,58 @@ namespace AddressBookProblem_Collections
                 AddressBook addressBook = addressBookMapper[name];
                 addressBook.DeleteContact();
             }
+        }
+
+        private static void SearchContactWithCityName()
+        {
+            Console.WriteLine("\nEnter full name of the person!");
+            string personName = Console.ReadLine();
+            Console.WriteLine("\nEnter name of the city!");
+            string cityName = Console.ReadLine();
+            if (!cityToContactMapperGlobal.ContainsKey(cityName))
+            {
+                Console.WriteLine("No record found with such city name!");
+                return;
+            }
+            foreach (Contact contact in cityToContactMapperGlobal[cityName])
+            {
+                if ((contact.firstName + " " + contact.lastName) == personName)
+                {
+                    Console.WriteLine("Contact found!");
+                    Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
+                    Console.WriteLine("Address: " + contact.address + "\nCity: " + contact.city);
+                    Console.WriteLine("State: " + contact.state + "\nZip: " + contact.zip);
+                    Console.WriteLine("Phone Number: " + contact.phoneNumber + "\nEmail: " + contact.email);
+                    return;
+                }
+            }
+            Console.WriteLine($"No Contact Exist With This Name!");
+        }
+
+        private static void SearchContactWithStateName()
+        {
+            Console.WriteLine("\nEnter full name of the person!");
+            string personName = Console.ReadLine();
+            Console.WriteLine("\nEnter name of the state!");
+            string stateName = Console.ReadLine();
+            if (!stateToContactMapperGlobal.ContainsKey(stateName))
+            {
+                Console.WriteLine("No record found with this state name!");
+                return;
+            }
+            foreach (Contact contact in stateToContactMapperGlobal[stateName])
+            {
+                if ((contact.firstName + " " + contact.lastName) == personName)
+                {
+                    Console.WriteLine("Contact found!");
+                    Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
+                    Console.WriteLine("Address: " + contact.address + "\nCity: " + contact.city);
+                    Console.WriteLine("State: " + contact.state + "\nZip: " + contact.zip);
+                    Console.WriteLine("Phone Number: " + contact.phoneNumber + "\nEmail: " + contact.email);
+                    return;
+                }
+            }
+            Console.WriteLine($"No Contact Exist With This Name!");
         }
     }
 }
