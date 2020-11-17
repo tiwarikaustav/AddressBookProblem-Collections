@@ -10,7 +10,26 @@ using System.Text;
 
 namespace AddressBookProblem_Collections
 {
-    class Contacts
+    public class Contact
     {
+        /// <summary>
+        /// Variables to store first name, last name, address, city, state, zip, phone number and email 
+        /// </summary>
+        public string firstName, lastName, address, city, state, zip, phoneNumber, email;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Contact"/> class.
+        /// </summary>
+        public Contact()
+        {
+            this.firstName = "";
+            this.lastName = "";
+            this.address = "";
+            this.city = "";
+            this.state = "";
+            this.zip = "";
+            this.phoneNumber = "";
+            this.email = "";
+        }
     }
 }
