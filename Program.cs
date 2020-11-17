@@ -11,10 +11,6 @@ namespace AddressBookProblem_Collections
 {
     class Program
     {
-        /// <summary>
-        /// addressBookMapper is a data structure used to store All AddressBooks created in the project
-        /// which can be accessed with the help of their name
-        /// </summary>
         private static readonly Dictionary<string, AddressBook> addressBookMapper = new Dictionary<string, AddressBook>();
 
         /// <summary>
@@ -48,7 +44,8 @@ namespace AddressBookProblem_Collections
             {
                 Console.WriteLine("\nEnter 1 to add New Address Book \nEnter 2 to Add Contacts \nEnter 3 to Edit Contacts " +
                     "\nEnter 4 to Delete Contacts\nEnter 5 to search contact using city name" +
-                    "\nEnter 6 to search contact using state name\nEnter any other key to exit");
+                    "\nEnter 6 to search contact using state name\nEnter 7 to view contact details by city name" +
+                    "\nEnter 8 to view contact details by state name\nEnter any other key to exit");
                 string options = Console.ReadLine();
                 switch (options)
                 {
@@ -69,6 +66,12 @@ namespace AddressBookProblem_Collections
                         break;
                     case "6":
                         SearchContactWithStateName();
+                        break;
+                    case "7":
+                        ViewContactByCityName();
+                        break;
+                    case "8":
+                        ViewContactByStateName();
                         break;
                     default:
                         flag = false;
@@ -214,6 +217,44 @@ namespace AddressBookProblem_Collections
                 }
             }
             Console.WriteLine($"No Contact Exist With This Name!");
+        }
+
+        public static void ViewContactByCityName()
+        {
+            Console.WriteLine("\nEnter name of the city!");
+            string cityName = Console.ReadLine();
+            if (!cityToContactMapperGlobal.ContainsKey(cityName) || cityToContactMapperGlobal[cityName].Count == 0)
+            {
+                Console.WriteLine("No record found with such city name!");
+                return;
+            }
+            foreach (Contact contact in cityToContactMapperGlobal[cityName])
+            {
+                Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
+                Console.WriteLine("Address: " + contact.address + "\nCity: " + contact.city);
+                Console.WriteLine("State: " + contact.state + "\nZip: " + contact.zip);
+                Console.WriteLine("Phone Number: " + contact.phoneNumber + "\nEmail: " + contact.email);
+                Console.WriteLine("\n");
+            }
+        }
+
+        public static void ViewContactByStateName()
+        {
+            Console.WriteLine("\nEnter name of the State!");
+            string stateName = Console.ReadLine();
+            if (!stateToContactMapperGlobal.ContainsKey(stateName) || stateToContactMapperGlobal[stateName].Count == 0)
+            {
+                Console.WriteLine("No record found with such state name!");
+                return;
+            }
+            foreach (Contact contact in stateToContactMapperGlobal[stateName])
+            {
+                Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
+                Console.WriteLine("Address: " + contact.address + "\nCity: " + contact.city);
+                Console.WriteLine("State: " + contact.state + "\nZip: " + contact.zip);
+                Console.WriteLine("Phone Number: " + contact.phoneNumber + "\nEmail: " + contact.email);
+                Console.WriteLine("\n");
+            }
         }
     }
 }
